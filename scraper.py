@@ -10,7 +10,18 @@ movie_genres = []
 result = []
 found = None
 
-url = "https://www.imdb.com/chart/toptv/?ref_=fea_csegbest_2025_series_nv_menu"
+def check_description(container):
+    movie_description=input("Type The Movie Name to See The Description ")
+    for movies in container:
+        if movie_description.lower() == movies["Title"].lower():
+            print(movies["Description"])
+            found = True 
+            break
+    
+    if not found:
+        print("Invaild Input")
+
+url = "https://www.imdb.com/chart/top/?ref_=hm_nv_menu"
 headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'}
 
 response = requests.get(url,headers=headers)
@@ -48,7 +59,6 @@ for i in range(250):
     master_genre_list.extend([g.strip() for g in raw_genres])
     
 
-df = pd.DataFrame(container)
 unique_genres = sorted(list(set(master_genre_list)))
  
 for _ in unique_genres:
@@ -65,14 +75,8 @@ for movie in result:
     print(f"- {movie['Title']} ({movie['Rating']})")
     #print(f"  Poster: {movie['Image']}")
 
-movie_description=input("Type The Movie Name to See The Description ")
-for movies in container:
-    if movie_description.lower() == movies["Title"].lower():
-        print(movies["Description"])
-        found = True 
-        break
-    
-if not found:
-    print("Invaild Input")
+if input("type d to see check_description ")=="d":
+    check_description(container)
+
 
 
